@@ -1,0 +1,17 @@
+﻿{
+  "Label": null,
+  "Path": null,
+  "Data": {
+    "allPeople": [
+      {
+        "name": "Test name",
+        "supervisorId": null,
+        "supervisor": null
+      }
+    ]
+  },
+  "Errors": null,
+  "Extensions": null,
+  "ContextData": null,
+  "HasNext": null
+}

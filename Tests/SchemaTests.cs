@@ -10,12 +10,12 @@ using Xunit;
 
 namespace Tests
 {
-    public class PeopleTests
+    public class SchemaTests
     {
         private readonly IRequestExecutor _executor;
         private readonly ServiceProvider _serviceProvider;
 
-        public PeopleTests()
+        public SchemaTests()
         {
             var services = new ServiceCollection();
             services.AddDbContext<PeopleContext>(options => { options.UseInMemoryDatabase("PeopleContext"); });
@@ -32,39 +32,10 @@ namespace Tests
         }
 
         [Fact]
-        public async Task AllPeople_WithOnePerson_ShouldReturnValidPersonCollection()
+        public void Schema_ShouldBeCreated()
         {
-            var context = _serviceProvider.GetService<PeopleContext>()!;
-            context.Add(new Person
-                {
-                    Id = new Guid("553A403C-CD68-4C7D-A2EC-FEA6428CB7C9"),
-                    Name = "Test name"
-                });
-            
-            await context.SaveChangesAsync();
-
-            IReadOnlyQueryRequest request =
-                QueryRequestBuilder.New()
-                    .SetQuery(
-                        @"
-query getPeople {
-  allPeople {
-    name
-    supervisorId
-  	supervisor {
-      id
-      name
-      supervisorId
-    }
-  }
-}")
-                    .SetServices(_serviceProvider)
-                    .Create();
-
-
-            var result = await _executor.ExecuteAsync(request);
-            
-            result.MatchSnapshot();
+            _executor.Schema.ToString().MatchSnapshot();
         }
+
     }
 }
