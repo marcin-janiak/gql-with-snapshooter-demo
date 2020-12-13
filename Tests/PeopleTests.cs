@@ -49,6 +49,7 @@ namespace Tests
                         @"
 query getPeople {
   allPeople {
+    id
     name
     supervisorId
   	supervisor {
